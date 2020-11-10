@@ -47,18 +47,39 @@ export default function Redirect() {
     fn();
   }, [code]);
 
-  const setEnv = async (project: any) => {
-    console.debug("setEnv", { project });
-    const key = "LEONARD_TEST";
-    const value = "LEONARD_VAL";
-    const res = await fetch(
-      `/api/setEnvVars?token=${token}&projectId=${project.id}&key=${key}&value=${value}`
-    );
-    if (!res.ok) {
-      throw new Error("Failed to get access token");
-    }
+  const getEnvKey = (target) => {
+    return `DEMO_${target}`;
+  };
+
+  const setEnv = async (
+    project: any,
+    target: string,
+    method: string,
+    envId: string = null
+  ) => {
+    const key = getEnvKey(target);
+    const value = `DEMO_VAL_${Date.now()}`;
+    const projectId = project.id;
+    const params = {
+      configurationId,
+      envId,
+      key,
+      method,
+      projectId,
+      target,
+      token,
+      value,
+    };
+    const query = Object.keys(params)
+      .map((key) => key + "=" + params[key])
+      .join("&");
+    const url = `/api/setEnvVars?${query}`;
+    console.debug("setEnv", { project, url, params });
+    const res = await fetch(url);
     const json = await res.json();
-    console.debug("setEnv res", { json });
+    console.debug("setEnv res json", { json });
+    const projects = json.projects;
+    setProjects(projects);
   };
 
   return (
@@ -66,54 +87,92 @@ export default function Redirect() {
       {loading ? (
         <h3>Loading access token...</h3>
       ) : (
-        <div className={styles.grid}>
+        <div>
           <div className={styles.card}>
             <table className={styles.table}>
-              <tr>
-                <th className={styles.tableHeaderShrink}>Key</th>
-                <th>val</th>
-              </tr>
-              <tr>
-                <td>configurationId</td>
-                <td>{configurationId}</td>
-              </tr>
-              <tr>
-                <td>token</td>
-                <td>{token}</td>
-              </tr>
-              <tr>
-                <td>next</td>
-                <td>{next}</td>
-              </tr>
-            </table>
-          </div>
-          <div className={styles.card}>
-            <table className={styles.table}>
-              <tr>
-                <th>Project</th>
-                <th></th>
-              </tr>
-              {projects.map((project) => (
-                <tr key={project.id}>
-                  <td>
-                    <strong title={project.id}>{project.name}</strong>
-                  </td>
-                  <td>
-                    <button onClick={() => setEnv(project)}>Set Env</button>
-                  </td>
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th>Production Env</th>
+                  <th>Preview Env</th>
+                  <th>Development Env</th>
                 </tr>
-              ))}
+              </thead>
+              <tbody>
+                {projects.map((project) => (
+                  <tr key={project.id}>
+                    <td>
+                      <strong title={project.id}>{project.name}</strong>
+                    </td>
+                    {["production", "preview", "development"].map((target) => {
+                      const envVar = project.env.find(
+                        (p) => p.key == getEnvKey(target)
+                      );
+                      return (
+                        <td key={target}>
+                          <input
+                            disabled
+                            value={envVar ? envVar.value : "NOT SET"}
+                          />
+                          <button
+                            onClick={() =>
+                              setEnv(
+                                project,
+                                target,
+                                envVar ? "PATCH" : "POST",
+                                envVar.id
+                              )
+                            }
+                            title={envVar ? "Edit" : "Create"}
+                          >
+                            {envVar ? "✍" : "➕"}
+                          </button>
+                          <button
+                            disabled={!envVar}
+                            onClick={() => setEnv(project, target, "DELETE")}
+                            title="Remove"
+                          >
+                            🗑️
+                          </button>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
-          <div>
+
+          <div style={{ margin: "0 auto", textAlign: "center" }}>
             <button
               onClick={() => {
                 console.debug("All Done, going to", { next });
                 window.location.href = next;
               }}
+              style={{ fontSize: "2rem" }}
             >
-              All Done
+              All Done → back to Vercel
             </button>
+          </div>
+
+          <div className={styles.card} style={{ fontSize: "0.7rem" }}>
+            <h5>debug</h5>
+            <table className={styles.table}>
+              <tbody>
+                <tr>
+                  <td>configurationId</td>
+                  <td>{configurationId}</td>
+                </tr>
+                <tr>
+                  <td>token</td>
+                  <td>{token}</td>
+                </tr>
+                <tr>
+                  <td>next</td>
+                  <td>{next}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       )}
@@ -124,12 +183,12 @@ export default function Redirect() {
 const Page = ({ children }) => (
   <div className={styles.container}>
     <Head>
-      <title>Redirect Handler</title>
+      <title>Integration Demo</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
     <main className={styles.main}>
-      <h1 className={styles.title}>Redirect Handler</h1>
+      <h1 className={styles.title}>Integration Demo</h1>
       {children}
     </main>
     <footer className={styles.footer}>

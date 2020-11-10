@@ -2,7 +2,6 @@ const { parse } = require("url");
 const { HOST } = require("../../lib/env");
 const getAccessToken = require("../../lib/get-access-token");
 const getProjects = require("../../lib/get-projects");
-const setMetadata = require("../../lib/set-metadata");
 import { NowRequest, NowResponse } from "@vercel/node";
 
 module.exports = async (req: NowRequest, res: NowResponse) => {
@@ -21,6 +20,5 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
   });
   const projects = await getProjects({ configurationId, token });
 
-  await setMetadata({ configurationId, token }, { projects, token });
   res.json({ token, projects });
 };
