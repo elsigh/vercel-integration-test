@@ -47,62 +47,100 @@ export default function Redirect() {
     fn();
   }, [code]);
 
-  const setEnv = (projectId: string) => {};
-
-  if (loading) {
-    return <h1 className={styles.title}>Loading access token...</h1>;
-  }
+  const setEnv = async (project: any) => {
+    console.debug("setEnv", { project });
+    const key = "LEONARD_TEST";
+    const value = "LEONARD_VAL";
+    const res = await fetch(
+      `/api/setEnvVars?token=${token}&projectId=${project.id}&key=${key}&value=${value}`
+    );
+    if (!res.ok) {
+      throw new Error("Failed to get access token");
+    }
+    const json = await res.json();
+    console.debug("setEnv res", { json });
+  };
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Redirect Handler</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>Redirect Handler</h1>
-
+    <Page>
+      {loading ? (
+        <h3>Loading access token...</h3>
+      ) : (
         <div className={styles.grid}>
-          <div className={styles.card}>configurationId: {configurationId}</div>
-          <div className={styles.card}>next: {next}</div>
-          <div className={styles.card}>token: {token}</div>
           <div className={styles.card}>
-            <h3>Projects</h3>
             <table className={styles.table}>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
+                <th className={styles.tableHeaderShrink}>Key</th>
+                <th>val</th>
+              </tr>
+              <tr>
+                <td>configurationId</td>
+                <td>{configurationId}</td>
+              </tr>
+              <tr>
+                <td>token</td>
+                <td>{token}</td>
+              </tr>
+              <tr>
+                <td>next</td>
+                <td>{next}</td>
+              </tr>
+            </table>
+          </div>
+          <div className={styles.card}>
+            <table className={styles.table}>
+              <tr>
+                <th>Project</th>
                 <th></th>
               </tr>
               {projects.map((project) => (
                 <tr key={project.id}>
                   <td>
-                    <code>{project.id}</code>
+                    <strong title={project.id}>{project.name}</strong>
                   </td>
                   <td>
-                    <strong>{project.name}</strong>
-                  </td>
-                  <td>
-                    <button onClick={() => setEnv(project.id)}>Set Env</button>
+                    <button onClick={() => setEnv(project)}>Set Env</button>
                   </td>
                 </tr>
               ))}
             </table>
           </div>
+          <div>
+            <button
+              onClick={() => {
+                console.debug("All Done, going to", { next });
+                window.location.href = next;
+              }}
+            >
+              All Done
+            </button>
+          </div>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=vercel-integration-test&utm_medium=default-template&utm_campaign=vercel-integration-test"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+      )}
+    </Page>
   );
 }
+
+const Page = ({ children }) => (
+  <div className={styles.container}>
+    <Head>
+      <title>Redirect Handler</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+
+    <main className={styles.main}>
+      <h1 className={styles.title}>Redirect Handler</h1>
+      {children}
+    </main>
+    <footer className={styles.footer}>
+      <a
+        href="https://vercel.com?utm_source=vercel-integration-test&utm_medium=default-template&utm_campaign=vercel-integration-test"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Powered by{" "}
+        <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+      </a>
+    </footer>
+  </div>
+);

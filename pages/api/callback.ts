@@ -3,8 +3,9 @@ const { HOST } = require("../../lib/env");
 const getAccessToken = require("../../lib/get-access-token");
 const getProjects = require("../../lib/get-projects");
 const setMetadata = require("../../lib/set-metadata");
+import { NowRequest, NowResponse } from "@vercel/node";
 
-module.exports = async (req, res) => {
+module.exports = async (req: NowRequest, res: NowResponse) => {
   const {
     query: { code, configurationId },
   } = parse(req.url, true);

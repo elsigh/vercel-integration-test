@@ -26,17 +26,17 @@ module.exports = async ({
       body: JSON.stringify({
         key,
         value,
+        type: "plain",
         target,
       }),
     }
   );
 
   if (!res.ok) {
-    console.error("Error in set-metadata");
+    console.error("Error in set-env");
     throw await responseError(res);
   }
 
   const body = await res.json();
-
   return body;
 };
