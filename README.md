@@ -2,13 +2,19 @@
 
 This demo is just a proof-of-concept to help you realize a likely-common pattern for your integration - allowing users to create or point an existing "project" in your system to a Vercel project. Then you'll set consistently-named environment variables that your SDK depends on.
 
+See the Deploy button in action:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fhello-world&project-name=vercel-integrated-project-demo&repository-name=vercel-integrated-project-demo&redirect-url=https%3A%2F%2Fsongbook.studio%2Fabout&developer-id=oac_4FhKvY0Ia1NHtuKGFtl5GgSf&integration-ids=icfg_B0HlsHUGFpuJFXXIl4D6zRxL)
+
+[Deploy button documentation](https://vercel.com/docs/more/deploy-button)
+
 ## Integration Flow
 
-1. Create a production-ready integration on the [Vercel integration console](https://vercel.com/dashboard/integrations/console).
+1. Create a production-quality integration on the [Vercel integration console](https://vercel.com/dashboard/integrations/console).
 
 2. Set the "Redirect URL" (do not set UIHook URL) to an URL on your system. You can set this value to localhost for iterative development.
 
-3. When a user adds your integration Vercel will redirect the user to your "Redirect URL" with query parameters:
+3. When a user adds your integration from the marketplace Vercel will redirect the user to your "Redirect URL" with query parameters:
 
 - `code`: which you'll (exchange)[https://vercel.com/docs/api#endpoints/oauth2/exchanging-code-for-an-access-token] for an OAuth2 `access token`
 - `configurationId`: represents the `id` of the related configuration
