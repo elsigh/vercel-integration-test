@@ -99,7 +99,7 @@ export default function Redirect() {
                 </tr>
               </thead>
               <tbody>
-                {projects.map((project) => (
+                {projects.sort().map((project) => (
                   <tr key={project.id}>
                     <td>
                       <strong title={project.id}>{project.name}</strong>
@@ -120,7 +120,7 @@ export default function Redirect() {
                                 project,
                                 target,
                                 envVar ? "PATCH" : "POST",
-                                envVar.id
+                                envVar ? envVar.id : undefined
                               )
                             }
                             title={envVar ? "Edit" : "Create"}
