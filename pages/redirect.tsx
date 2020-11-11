@@ -5,9 +5,11 @@ import styles from "../styles/Home.module.css";
 export default function Redirect() {
   const [code, setCode] = useState("");
   const [token, setToken] = useState("");
-  const [projects, setProjects] = useState([]);
+  const [teamId, setTeamId] = useState("");
   const [configurationId, setConfigurationId] = useState("");
   const [next, setNext] = useState("");
+
+  const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -16,6 +18,7 @@ export default function Redirect() {
     const code = params.get("code");
     const configurationId = params.get("configurationId");
     const next = params.get("next");
+    const teamId = params.get("teamId");
 
     if (!(code && configurationId && next)) {
       throw new Error("Missing required integration URL params");
@@ -25,6 +28,7 @@ export default function Redirect() {
     setConfigurationId(configurationId);
     setNext(next);
     setCode(code);
+    setTeamId(teamId);
   }, []);
 
   useEffect(() => {
@@ -32,9 +36,13 @@ export default function Redirect() {
     if (token) return;
     setLoading(true);
     const fn = async () => {
-      const res = await fetch(
-        `/api/callback?code=${code}&configurationId=${configurationId}`
-      );
+      const params = {
+        configurationId,
+        code,
+        teamId,
+      };
+      const query = paramsToQuery(params);
+      const res = await fetch(`/api/callback?${query}`);
       if (!res.ok) {
         throw new Error("Failed to get access token");
       }
@@ -67,12 +75,11 @@ export default function Redirect() {
       method,
       projectId,
       target,
+      teamId,
       token,
       value,
     };
-    const query = Object.keys(params)
-      .map((key) => key + "=" + params[key])
-      .join("&");
+    const query = paramsToQuery(params);
     const url = `/api/setEnvVars?${query}`;
     console.debug("setEnv", { project, url, params });
     const res = await fetch(url);
@@ -203,3 +210,9 @@ const Page = ({ children }) => (
     </footer>
   </div>
 );
+
+const paramsToQuery = (params: Object) => {
+  return Object.keys(params)
+    .map((key) => key + "=" + params[key])
+    .join("&");
+};

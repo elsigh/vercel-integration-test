@@ -8,6 +8,7 @@ module.exports = async ({
   method,
   projectId,
   target,
+  teamId,
   token,
   type,
   value,
@@ -17,16 +18,17 @@ module.exports = async ({
   method: string;
   projectId: string;
   target: string[];
+  teamId: string;
   token: string;
   type: string;
   value: string;
 }) => {
   const url =
     method === "POST"
-      ? `https://api.vercel.com/v6/projects/${projectId}/env`
+      ? `https://api.vercel.com/v6/projects/${projectId}/env?teamId=${teamId}`
       : method === "PATCH"
-      ? `https://api.vercel.com/v6/projects/${projectId}/env/${envId}`
-      : `https://api.vercel.com/v4/projects/${projectId}/env/${key}?target=${target}`;
+      ? `https://api.vercel.com/v6/projects/${projectId}/env/${envId}?teamId=${teamId}`
+      : `https://api.vercel.com/v4/projects/${projectId}/env/${key}?target=${target}&teamId=${teamId}`;
 
   console.debug("set-env", {
     envId,

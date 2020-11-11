@@ -1,6 +1,6 @@
 const { parse } = require("url");
 const { HOST } = require("../../lib/env");
-const setEnv = require("../../lib/set-env");
+const setEnv = require("../../lib/set-env-vars");
 import { NowRequest, NowResponse } from "@vercel/node";
 const getProjects = require("../../lib/get-projects");
 
@@ -13,6 +13,7 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
       method,
       projectId,
       target,
+      teamId,
       token,
       value,
     },
@@ -29,12 +30,13 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
     method,
     projectId,
     target: [target],
+    teamId,
     token,
     type: "plain",
     value,
   });
 
   // This is not efficient
-  const projects = await getProjects({ configurationId, token });
+  const projects = await getProjects({ configurationId, token, teamId });
   res.json({ projects, envResp });
 };

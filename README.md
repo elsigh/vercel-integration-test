@@ -4,7 +4,7 @@ This demo is just a proof-of-concept to help you realize a likely-common pattern
 
 See the Deploy button in action:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fhello-world&project-name=vercel-integrated-project-demo&repository-name=vercel-integrated-project-demo&redirect-url=https%3A%2F%2Fsongbook.studio%2Fabout&developer-id=oac_4FhKvY0Ia1NHtuKGFtl5GgSf&integration-ids=icfg_B0HlsHUGFpuJFXXIl4D6zRxL)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fhello-world&integration-ids=oac_4FhKvY0Ia1NHtuKGFtl5GgSf)
 
 [Deploy button documentation](https://vercel.com/docs/more/deploy-button)
 
