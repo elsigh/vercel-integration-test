@@ -105,9 +105,9 @@ export default function Redirect() {
                       <strong title={project.id}>{project.name}</strong>
                     </td>
                     {["production", "preview", "development"].map((target) => {
-                      const envVar = project.env.find(
-                        (p) => p.key == getEnvKey(target)
-                      );
+                      const envVar = project.env
+                        ? project.env.find((p) => p.key == getEnvKey(target))
+                        : null;
                       return (
                         <td key={target}>
                           <input
