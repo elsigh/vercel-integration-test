@@ -1,14 +1,20 @@
 # Vercel Integration Example Code
 
-This demo is just a proof-of-concept to help you realize a likely-common pattern for your integration - allowing users to create or point an existing "project" in your system to a Vercel project. Then you'll set consistently-named environment variables that your SDK depends on.
+This app is just a proof-of-concept to help to realize a likely-common pattern for your integration - creating or mapping "project"-like entities in your system to projects in Vercel. The idea is that an integration sets environment variables which your SDK depends on such that, upon completing the integration, a user installs your integration and it will "just work".
 
-See the Deploy button in action:
+See this integration with the Deploy button in action:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fhello-world&integration-ids=oac_4FhKvY0Ia1NHtuKGFtl5GgSf)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%elsigh%2vercel-deploy-demo&integration-ids=oac_4FhKvY0Ia1NHtuKGFtl5GgSf)
+
+The app that gets cloned by Deploy renders the values set during the integration install flow.
 
 [Deploy button documentation](https://vercel.com/docs/more/deploy-button)
 
-## Integration Flow
+## Integration Flowchart
+
+<div style="width: 480px; height: 360px; margin: 10px; position: relative;"><iframe allowfullscreen frameborder="0" style="width:480px; height:360px" src="https://lucid.app/documents/embeddedchart/5095a92f-606b-4c7e-aa2e-83a56b1d8caa" id="CACN0axiksFG"></iframe></div>
+
+## Building Your Integration
 
 1. Create a production-quality integration on the [Vercel integration console](https://vercel.com/dashboard/integrations/console).
 
