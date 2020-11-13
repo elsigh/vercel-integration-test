@@ -4,7 +4,7 @@ This app is just a proof-of-concept to help to realize a likely-common pattern f
 
 See this integration with the Deploy button in action:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%elsigh%2vercel-deploy-demo&integration-ids=oac_4FhKvY0Ia1NHtuKGFtl5GgSf)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Felsigh%2Fvercel-integration-deploy-demo&integration-ids=oac_4FhKvY0Ia1NHtuKGFtl5GgSf)
 
 The app that gets cloned by Deploy renders the values set during the integration install flow.
 

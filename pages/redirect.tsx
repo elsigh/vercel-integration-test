@@ -18,7 +18,7 @@ export default function Redirect() {
     const code = params.get("code");
     const configurationId = params.get("configurationId");
     const next = params.get("next");
-    const teamId = params.get("teamId");
+    const teamId = params.get("teamId") || "";
 
     if (!(code && configurationId && next)) {
       throw new Error("Missing required integration URL params");
@@ -99,18 +99,19 @@ export default function Redirect() {
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th>Project</th>
                   <th>Production Env</th>
                   <th>Preview Env</th>
                   <th>Development Env</th>
                 </tr>
               </thead>
-              <tbody>
-                {projects.sort().map((project) => (
-                  <tr key={project.id}>
-                    <td>
-                      <strong title={project.id}>{project.name}</strong>
+              {projects.sort().map((project) => (
+                <tbody key={project.id}>
+                  <tr>
+                    <td colSpan={3} style={{ background: "#eee" }}>
+                      Project: {project.name}
                     </td>
+                  </tr>
+                  <tr>
                     {["production", "preview", "development"].map((target) => {
                       const envVar = project.env
                         ? project.env.find((p) => p.key == getEnvKey(target))
@@ -145,8 +146,8 @@ export default function Redirect() {
                       );
                     })}
                   </tr>
-                ))}
-              </tbody>
+                </tbody>
+              ))}
             </table>
           </div>
 
