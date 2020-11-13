@@ -12,7 +12,7 @@ The app that gets cloned by Deploy renders the values set during the integration
 
 ## Integration Flowchart
 
-![](https://app.lucidchart.com/documents/image/5095a92f-606b-4c7e-aa2e-83a56b1d8caa/1/600)
+![](https://app.lucidchart.com/documents/image/5095a92f-606b-4c7e-aa2e-83a56b1d8caa/1/838)
 
 ## Building Your Integration
 
