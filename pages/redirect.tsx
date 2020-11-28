@@ -49,7 +49,7 @@ export default function Redirect() {
       const json = await res.json();
       console.debug("callback", { json });
       setToken(json.token);
-      setProjects(json.projects);
+      setProjects(json.projects.projects);
       setLoading(false);
     };
     fn();
@@ -85,7 +85,7 @@ export default function Redirect() {
     const res = await fetch(url);
     const json = await res.json();
     console.debug("setEnv res json", { json });
-    const projects = json.projects;
+    const projects = json.projects.projects;
     setProjects(projects);
   };
 
