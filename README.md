@@ -22,10 +22,10 @@ The app that gets cloned by Deploy renders the values set during the integration
 
 3. When a user adds your integration from the marketplace Vercel will redirect the user to your "Redirect URL" with query parameters:
 
-- `code`: which you'll (exchange)[https://vercel.com/docs/api#endpoints/oauth2/exchanging-code-for-an-access-token] for an OAuth2 `access token`
-- `configurationId`: represents the `id` of the related configuration
-- `teamId`: The `teamId` for this scope on Vercel (or null if it's a personal account) **Ensure you test your integration with a team account as well as a personal account to make sure you are including `teamId` when it is present in your Redirect URL**
-- `next`: The URL you'll redirect to once configuration on your side is complete
+    - `code`: which you'll [exchange](https://vercel.com/docs/api#endpoints/o-auth2/exchanging-code-for-an-access-token) for an OAuth2 `access token`
+    - `configurationId`: represents the `id` of the related configuration
+    - `teamId`: The `teamId` for this scope on Vercel (or null if it's a personal account) **Ensure you test your integration with a team account as well as a personal account to make sure you are including `teamId` when it is present in your Redirect URL**
+    - `next`: The URL you'll redirect to once configuration on your side is complete
 
 4. Get in touch with Vercel once your integration is ready so we can begin testing and ultimately make your integration available to our users!
 
