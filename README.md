@@ -22,10 +22,10 @@ The app that gets cloned by Deploy renders the values set during the integration
 
 3. When a user adds your integration from the marketplace Vercel will redirect the user to your "Redirect URL" with query parameters:
 
-    - `code`: which you'll [exchange](https://vercel.com/docs/api#endpoints/o-auth2/exchanging-code-for-an-access-token) for an OAuth2 `access token`
-    - `configurationId`: represents the `id` of the related configuration
-    - `teamId`: The `teamId` for this scope on Vercel (or null if it's a personal account) **Ensure you test your integration with a team account as well as a personal account to make sure you are including `teamId` when it is present in your Redirect URL**
-    - `next`: The URL you'll redirect to once configuration on your side is complete
+   - `code`: which you'll [exchange](https://vercel.com/docs/api#endpoints/o-auth2/exchanging-code-for-an-access-token) for an OAuth2 `access token`
+   - `configurationId`: represents the `id` of the related configuration
+   - `teamId`: The `teamId` for this scope on Vercel (or null if it's a personal account) **Ensure you test your integration with a team account as well as a personal account to make sure you are including `teamId` when it is present in your Redirect URL**
+   - `next`: The URL you'll redirect to once configuration on your side is complete
 
 4. Get in touch with Vercel once your integration is ready so we can begin testing and ultimately make your integration available to our users!
 
@@ -35,16 +35,19 @@ You'll also likely want to reference our [API documentation](https://vercel.com/
 
 ## Running this Demo
 
-First, run the development server:
+First, configure and run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
+cp .env.local.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+You'll need to copy your `CLIENT_ID` and `CLIENT_SECRET` values from the bottom of your new integration in the integration console to `.env.local`
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Note: If you want to run this demo on a different port you will also need to change the `HOST` value in `.env.local`.
 
-## Learn More
+```bash
+yarn install
+yarn dev -p 3000
+```
+
+Now add your integration to a project and it should open a popup window that loads this application to set and unset the environment variables.
